@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomePage {
@@ -23,6 +24,8 @@ public class HomePage {
     By cartBadge = By.cssSelector(".shopping_cart_badge");
     By aboutSidebarLink = By.id("about_sidebar_link");
     By shoppingCartIcon = By.cssSelector("#shopping_cart_container a");
+    By productImages = By.cssSelector(".inventory_item_img img");
+    By productNames = By.className("inventory_item_name");
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -98,5 +101,35 @@ public class HomePage {
 
     public void clickShoppingCartIcon() {
         wait.until(ExpectedConditions.elementToBeClickable(shoppingCartIcon)).click();
+    }
+
+    public List<String> getAllProductImageSrcs() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productImages));
+        List<WebElement> images = driver.findElements(productImages);
+        List<String> srcs = new ArrayList<>();
+        for (WebElement image : images) {
+            srcs.add(image.getAttribute("src"));
+        }
+        return srcs;
+    }
+
+    public List<String> getAllProductImageAlts() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productImages));
+        List<WebElement> images = driver.findElements(productImages);
+        List<String> alts = new ArrayList<>();
+        for (WebElement image : images) {
+            alts.add(image.getAttribute("alt"));
+        }
+        return alts;
+    }
+
+    public List<String> getAllProductNames() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(productNames));
+        List<WebElement> names = driver.findElements(productNames);
+        List<String> result = new ArrayList<>();
+        for (WebElement name : names) {
+            result.add(name.getText());
+        }
+        return result;
     }
 }

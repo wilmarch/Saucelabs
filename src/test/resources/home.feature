@@ -27,6 +27,14 @@ Feature: Homepage
     When User clicks burger menu button
     Then The About link should point to "https://saucelabs.com/"
 
+  @image
+  Scenario: Verify each product displays a unique image
+    Then Each product image should have a unique source
+
+  @image
+  Scenario: Verify each product image matches its own product name
+    Then Each product image should match its product name
+
   @cart-add
   Scenario: User adds a product to the cart
     When User adds the following products to cart
@@ -36,10 +44,13 @@ Feature: Homepage
   @cart-add-multiple
   Scenario: User adds multiple products to the cart
     When User adds the following products to cart
-      | Sauce Labs Backpack   |
-      | Sauce Labs Bike Light |
-      | Sauce Labs Bolt T-Shirt |
-    Then The shopping cart badge should display "3"
+      | Sauce Labs Backpack               |
+      | Sauce Labs Bike Light             |
+      | Sauce Labs Bolt T-Shirt           |
+      | Sauce Labs Fleece Jacket          |
+      | Sauce Labs Onesie                 |
+      | Test.allTheThings() T-Shirt (Red) |
+    Then The shopping cart badge should display "6"
 
   @cart-remove
   Scenario: User removes a product from the cart
@@ -52,17 +63,23 @@ Feature: Homepage
   @cart-remove-multiple
   Scenario: User removes multiple products from the cart
     Given User has already added the following products to the cart
-      | Sauce Labs Backpack     |
-      | Sauce Labs Bike Light   |
-      | Sauce Labs Bolt T-Shirt |
+      | Sauce Labs Backpack               |
+      | Sauce Labs Bike Light             |
+      | Sauce Labs Bolt T-Shirt           |
+      | Sauce Labs Fleece Jacket          |
+      | Sauce Labs Onesie                 |
+      | Test.allTheThings() T-Shirt (Red) |
     When User removes the following products from cart
-      | Sauce Labs Backpack     |
-      | Sauce Labs Bike Light   |
-      | Sauce Labs Bolt T-Shirt |
+      | Sauce Labs Backpack               |
+      | Sauce Labs Bike Light             |
+      | Sauce Labs Bolt T-Shirt           |
+      | Sauce Labs Fleece Jacket          |
+      | Sauce Labs Onesie                 |
+      | Test.allTheThings() T-Shirt (Red) |
     Then The shopping cart badge should disappear
 
   @cart-remove-1-product
-  Scenario: User removes 2
+  Scenario: User removes 1 products
   products from the cart
     Given User has already added the following products to the cart
       | Sauce Labs Backpack     |
@@ -70,8 +87,7 @@ Feature: Homepage
       | Sauce Labs Bolt T-Shirt |
     When User removes the following products from cart
       | Sauce Labs Backpack     |
-      | Sauce Labs Bike Light   |
-    Then The shopping cart badge should display "1"
+    Then The shopping cart badge should display "2"
 
   @product-detail
   Scenario Outline: Verify product details match the homepage selection
@@ -80,7 +96,10 @@ Feature: Homepage
     And The product details should display name "<product_name>" and price "<expected_price>"
 
     Examples:
-      | product_name              | expected_price |
-      | Sauce Labs Backpack       | $29.99         |
-      | Sauce Labs Bike Light     | $9.99          |
-      | Sauce Labs Bolt T-Shirt   | $15.99         |
+      | product_name                        | expected_price |
+      | Sauce Labs Backpack                 | $29.99         |
+      | Sauce Labs Bike Light               | $9.99          |
+      | Sauce Labs Bolt T-Shirt             | $15.99         |
+      | Sauce Labs Fleece Jacket            | $49.99         |
+      | Sauce Labs Onesie                   | $7.99          |
+      | Test.allTheThings() T-Shirt (Red)   | $15.99         |

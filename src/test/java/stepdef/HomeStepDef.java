@@ -9,7 +9,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.HomePage;
 
 import java.time.Duration;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -32,7 +34,7 @@ public class HomeStepDef extends BaseTest {
         assertEquals(expectedName, actualName);
     }
 
-    // @logout & @about
+    // @logout & @about (keduanya pakai burger menu)
     @When("User clicks burger menu button")
     public void userClicksBurgerMenuButton() {
         homePage = new HomePage(driver);
@@ -91,9 +93,34 @@ public class HomeStepDef extends BaseTest {
         assertTrue(homePage.isCartBadgeInvisible());
     }
 
+    // ===== Step composite, dipakai di Background checkout.feature =====
+
     @Given("User has {string} in the cart")
     public void userHasInTheCart(String productName) {
         homePage = new HomePage(driver);
         homePage.clickAddToCartByProductName(productName);
+    }
+
+    // @image
+    @Then("Each product image should have a unique source")
+    public void eachProductImageShouldHaveAUniqueSource() {
+        homePage = new HomePage(driver);
+        List<String> srcs = homePage.getAllProductImageSrcs();
+        Set<String> uniqueSrcs = new HashSet<>(srcs);
+        assertEquals("Ada gambar produk yang duplikat: " + srcs, srcs.size(), uniqueSrcs.size());
+    }
+
+    @Then("Each product image should match its product name")
+    public void eachProductImageShouldMatchItsProductName() {
+        homePage = new HomePage(driver);
+        List<String> productNames = homePage.getAllProductNames();
+        List<String> imageAlts = homePage.getAllProductImageAlts();
+
+        assertEquals("Jumlah gambar tidak sama dengan jumlah produk", productNames.size(), imageAlts.size());
+
+        for (int i = 0; i < productNames.size(); i++) {
+            assertEquals("Gambar di posisi ke-" + (i + 1) + " tidak sesuai dengan produknya",
+                    productNames.get(i), imageAlts.get(i));
+        }
     }
 }
