@@ -18,6 +18,7 @@ public class HomeStepDef extends BaseTest {
 
     private HomePage homePage;
 
+    // @sorting
     @When("User selects filter option {string}")
     public void userSelectsFilterOption(String sortOption) {
         homePage = new HomePage(driver);
@@ -31,6 +32,7 @@ public class HomeStepDef extends BaseTest {
         assertEquals(expectedName, actualName);
     }
 
+    // @logout & @about (keduanya pakai burger menu)
     @When("User clicks burger menu button")
     public void userClicksBurgerMenuButton() {
         homePage = new HomePage(driver);
@@ -56,6 +58,7 @@ public class HomeStepDef extends BaseTest {
         assertEquals(expectedUrl, homePage.getAboutLinkHref());
     }
 
+    // @cart-add
     @When("User adds the following products to cart")
     public void userAddsTheFollowingProductsToCart(List<String> productList) {
         homePage = new HomePage(driver);
@@ -64,6 +67,14 @@ public class HomeStepDef extends BaseTest {
         }
     }
 
+    @Then("The shopping cart badge should display {string}")
+    public void theShoppingCartBadgeShouldDisplay(String expectedCount) {
+        homePage = new HomePage(driver);
+        String actualCount = homePage.getCartBadgeCount();
+        assertEquals(expectedCount, actualCount);
+    }
+
+    // @cart-remove
     @Given("User has already added the following products to the cart")
     public void userHasAlreadyAddedTheFollowingProductsToTheCart(List<String> productList) {
         homePage = new HomePage(driver);
@@ -80,16 +91,17 @@ public class HomeStepDef extends BaseTest {
         }
     }
 
-    @Then("The shopping cart badge should display {string}")
-    public void theShoppingCartBadgeShouldDisplay(String expectedCount) {
-        homePage = new HomePage(driver);
-        String actualCount = homePage.getCartBadgeCount();
-        assertEquals(expectedCount, actualCount);
-    }
-
     @Then("The shopping cart badge should disappear")
     public void theShoppingCartBadgeShouldDisappear() {
         homePage = new HomePage(driver);
         assertTrue(homePage.isCartBadgeInvisible());
+    }
+
+    // ===== Step composite, dipakai di Background checkout.feature =====
+
+    @Given("User has {string} in the cart")
+    public void userHasInTheCart(String productName) {
+        homePage = new HomePage(driver);
+        homePage.clickAddToCartByProductName(productName);
     }
 }

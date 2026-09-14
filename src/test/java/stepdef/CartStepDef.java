@@ -17,9 +17,10 @@ import static org.junit.Assert.assertTrue;
 
 public class CartStepDef extends BaseTest {
 
-    private HomePage homePage;
-    private CartPage cartPage;
+     HomePage homePage;
+     CartPage cartPage;
 
+    // Scenario: Verify cart item matches selected product
     @When("User clicks shopping cart icon")
     public void userClicksShoppingCartIcon() {
         homePage = new HomePage(driver);
@@ -42,16 +43,7 @@ public class CartStepDef extends BaseTest {
         assertTrue("Item dengan nama '" + expectedName + "' dan harga '" + expectedPrice + "' tidak ditemukan di cart", found);
     }
 
-    @When("User clicks checkout button")
-    public void userClicksCheckoutButton() {
-        cartPage.clickCheckout();
-    }
-
-    @When("User clicks continue shopping button")
-    public void userClicksContinueShoppingButton() {
-        cartPage.clickContinueShopping();
-    }
-
+    // Scenario: Remove item from cart page
     @When("User removes {string} from cart page")
     public void userRemovesFromCartPage(String productName) {
         cartPage.clickRemoveByProductName(productName);
@@ -60,5 +52,23 @@ public class CartStepDef extends BaseTest {
     @Then("The cart should have no items")
     public void theCartShouldHaveNoItems() {
         assertTrue(cartPage.isCartEmpty());
+    }
+
+    // Scenario: Navigate back to homepage via continue shopping
+    @When("User clicks continue shopping button")
+    public void userClicksContinueShoppingButton() {
+        cartPage.clickContinueShopping();
+    }
+
+    // Scenario: @bug @expected-fail - checkout dengan cart kosong
+    @When("User clicks checkout button")
+    public void userClicksCheckoutButton() {
+        cartPage.clickCheckout();
+    }
+
+    @Then("User should stay on cart page")
+    public void userShouldStayOnCartPage() {
+        assertTrue("Expected to stay on cart page, but URL was: " + driver.getCurrentUrl(),
+                driver.getCurrentUrl().contains("cart.html"));
     }
 }

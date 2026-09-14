@@ -2,9 +2,7 @@
 Feature: Cart Page
 
   Background:
-    Given User is on login page
-    When User inputs username "standard_user" and password "secret_sauce"
-    And User clicks login button
+    Given User is logged in as "standard_user"
 
   Scenario: Verify cart item matches selected product
     When User adds the following products to cart
@@ -26,3 +24,11 @@ Feature: Cart Page
     Then User should be redirected to cart page
     And User clicks continue shopping button
     Then User should be redirected to inventory page
+
+  @bug @expected-fail
+  Scenario: Checkout seharusnya tidak bisa lanjut jika cart kosong
+    When User clicks shopping cart icon
+    Then User should be redirected to cart page
+    And The cart should have no items
+    When User clicks checkout button
+    Then User should stay on cart page

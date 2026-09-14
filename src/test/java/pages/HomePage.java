@@ -50,8 +50,7 @@ public class HomePage {
     }
 
     public void clickLogout() {
-        WebElement logoutBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(logoutSidebarLink));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", logoutBtn);
+        wait.until(ExpectedConditions.elementToBeClickable(logoutSidebarLink)).click();
     }
 
     public String getAboutLinkHref() {

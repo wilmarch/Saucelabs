@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 public class LoginStepDef extends BaseTest {
 
     LoginPage loginPage;
-     HomePage homePage;
+    HomePage homePage;
 
     @Given("User is on login page")
     public void userIsOnLoginPage() {
@@ -48,5 +48,14 @@ public class LoginStepDef extends BaseTest {
     public void userSeesErrorMessage(String expectedErrorMessage) {
         String actualErrorMessage = loginPage.getErrorMessage();
         assertEquals(expectedErrorMessage, actualErrorMessage);
+    }
+
+    @Given("User is logged in as {string}")
+    public void userIsLoggedInAs(String username) {
+        loginPage = new LoginPage(driver);
+        loginPage.openLoginPage();
+        loginPage.enterUsername(username);
+        loginPage.enterPassword("secret_sauce");
+        loginPage.clickLogin();
     }
 }

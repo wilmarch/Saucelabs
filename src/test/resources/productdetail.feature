@@ -2,11 +2,8 @@
 Feature: Product Detail Page Actions
 
   Background:
-    Given User is on login page
-    When User inputs username "standard_user" and password "secret_sauce"
-    And User clicks login button
-    And User clicks on product title "Sauce Labs Backpack"
-    Then User should be redirected to product detail page
+    Given User is logged in as "standard_user"
+    And User is on product detail page for "Sauce Labs Backpack"
 
   Scenario: Add product to cart from product detail page
     When User clicks add to cart button

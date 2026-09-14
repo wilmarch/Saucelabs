@@ -2,10 +2,7 @@
 Feature: Homepage
 
   Background:
-    Given User is on login page
-    When User inputs username "standard_user" and password "secret_sauce"
-    And User clicks login button
-    Then User should be redirected to inventory page
+    Given User is logged in as "standard_user"
 
   @sorting
   Scenario Outline: Verify product sorting functionality
@@ -27,10 +24,7 @@ Feature: Homepage
 
   @about
   Scenario: Verify About link points to correct external URL
-    Given User is on login page
-    When User inputs username "standard_user" and password "secret_sauce"
-    And User clicks login button
-    And User clicks burger menu button
+    When User clicks burger menu button
     Then The About link should point to "https://saucelabs.com/"
 
   @cart-add

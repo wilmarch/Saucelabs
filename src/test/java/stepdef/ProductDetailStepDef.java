@@ -19,6 +19,8 @@ public class ProductDetailStepDef extends BaseTest {
     private HomePage homePage;
     private ProductDetailPage productDetailPage;
 
+
+
     @When("User clicks on product title {string}")
     public void userClicksOnProductTitle(String productName) {
         homePage = new HomePage(driver);
@@ -39,8 +41,27 @@ public class ProductDetailStepDef extends BaseTest {
         assertEquals(expectedPrice, productDetailPage.getProductPrice());
     }
 
+
+    @Given("User is on product detail page for {string}")
+    public void userIsOnProductDetailPageFor(String productName) {
+        homePage = new HomePage(driver);
+        homePage.clickProductTitleByName(productName);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(ExpectedConditions.urlContains("inventory-item.html"));
+        productDetailPage = new ProductDetailPage(driver);
+    }
+
+
+    // Scenario: Add product to cart
     @When("User clicks add to cart button")
     public void userClicksAddToCartButton() {
+        productDetailPage = new ProductDetailPage(driver);
+        productDetailPage.clickAddToCart();
+    }
+
+    // Scenario: Remove product from cart
+    @Given("User has already added the product to cart from detail page")
+    public void userHasAlreadyAddedTheProductToCartFromDetailPage() {
         productDetailPage = new ProductDetailPage(driver);
         productDetailPage.clickAddToCart();
     }
@@ -51,20 +72,15 @@ public class ProductDetailStepDef extends BaseTest {
         productDetailPage.clickRemove();
     }
 
+    @Then("The button should change to {string}")
+    public void theButtonShouldChangeTo(String expectedButtonText) {
+        assertEquals(expectedButtonText, productDetailPage.getActionButtonText());
+    }
+
+    // Scenario: Navigate back to inventory page
     @When("User clicks back to products button")
     public void userClicksBackToProductsButton() {
         productDetailPage = new ProductDetailPage(driver);
         productDetailPage.clickBackToProducts();
-    }
-
-    @Given("User has already added the product to cart from detail page")
-    public void userHasAlreadyAddedTheProductToCartFromDetailPage() {
-        productDetailPage = new ProductDetailPage(driver);
-        productDetailPage.clickAddToCart();
-    }
-
-    @Then("The button should change to {string}")
-    public void theButtonShouldChangeTo(String expectedButtonText) {
-        assertEquals(expectedButtonText, productDetailPage.getActionButtonText());
     }
 }
