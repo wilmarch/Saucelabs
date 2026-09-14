@@ -32,7 +32,7 @@ public class HomeStepDef extends BaseTest {
         assertEquals(expectedName, actualName);
     }
 
-    // @logout & @about (keduanya pakai burger menu)
+    // @logout & @about
     @When("User clicks burger menu button")
     public void userClicksBurgerMenuButton() {
         homePage = new HomePage(driver);
@@ -62,9 +62,7 @@ public class HomeStepDef extends BaseTest {
     @When("User adds the following products to cart")
     public void userAddsTheFollowingProductsToCart(List<String> productList) {
         homePage = new HomePage(driver);
-        for (String product : productList) {
-            homePage.clickAddToCartByProductName(product);
-        }
+        homePage.addMultipleProductsToCart(productList);
     }
 
     @Then("The shopping cart badge should display {string}")
@@ -78,17 +76,13 @@ public class HomeStepDef extends BaseTest {
     @Given("User has already added the following products to the cart")
     public void userHasAlreadyAddedTheFollowingProductsToTheCart(List<String> productList) {
         homePage = new HomePage(driver);
-        for (String product : productList) {
-            homePage.clickAddToCartByProductName(product);
-        }
+        homePage.addMultipleProductsToCart(productList);
     }
 
     @When("User removes the following products from cart")
     public void userRemovesTheFollowingProductsFromCart(List<String> productList) {
         homePage = new HomePage(driver);
-        for (String product : productList) {
-            homePage.clickRemoveByProductName(product);
-        }
+        homePage.removeMultipleProductsFromCart(productList);
     }
 
     @Then("The shopping cart badge should disappear")
@@ -96,8 +90,6 @@ public class HomeStepDef extends BaseTest {
         homePage = new HomePage(driver);
         assertTrue(homePage.isCartBadgeInvisible());
     }
-
-    // ===== Step composite, dipakai di Background checkout.feature =====
 
     @Given("User has {string} in the cart")
     public void userHasInTheCart(String productName) {

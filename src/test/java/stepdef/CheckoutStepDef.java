@@ -24,8 +24,6 @@ public class CheckoutStepDef extends BaseTest {
     private CheckoutOverviewPage checkoutOverviewPage;
     private CheckoutCompletePage checkoutCompletePage;
 
-    // ===== Urutan sesuai checkout.feature =====
-
     // Background
     @Given("User is on checkout information page")
     public void userIsOnCheckoutInformationPage() {

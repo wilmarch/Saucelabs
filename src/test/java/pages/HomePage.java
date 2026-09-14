@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class HomePage {
     WebDriver driver;
@@ -68,10 +69,22 @@ public class HomePage {
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression))).click();
     }
 
+    public void addMultipleProductsToCart(List<String> productNames) {
+        for (String productName : productNames) {
+            clickAddToCartByProductName(productName);
+        }
+    }
+
     public void clickRemoveByProductName(String productName) {
         String formattedName = productName.toLowerCase().replace(" ", "-");
         String xpathExpression = String.format("//button[starts-with(@id, 'remove-%s')]", formattedName);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression))).click();
+    }
+
+    public void removeMultipleProductsFromCart(List<String> productNames) {
+        for (String productName : productNames) {
+            clickRemoveByProductName(productName);
+        }
     }
 
     public boolean isCartBadgeInvisible() {

@@ -33,12 +33,32 @@ Feature: Homepage
       | Sauce Labs Backpack |
     Then The shopping cart badge should display "1"
 
+  @cart-add-multiple
+  Scenario: User adds multiple products to the cart
+    When User adds the following products to cart
+      | Sauce Labs Backpack   |
+      | Sauce Labs Bike Light |
+      | Sauce Labs Bolt T-Shirt |
+    Then The shopping cart badge should display "3"
+
   @cart-remove
   Scenario: User removes a product from the cart
     Given User has already added the following products to the cart
       | Sauce Labs Backpack |
     When User removes the following products from cart
       | Sauce Labs Backpack |
+    Then The shopping cart badge should disappear
+
+  @cart-remove-multiple
+  Scenario: User removes multiple products from the cart
+    Given User has already added the following products to the cart
+      | Sauce Labs Backpack     |
+      | Sauce Labs Bike Light   |
+      | Sauce Labs Bolt T-Shirt |
+    When User removes the following products from cart
+      | Sauce Labs Backpack     |
+      | Sauce Labs Bike Light   |
+      | Sauce Labs Bolt T-Shirt |
     Then The shopping cart badge should disappear
 
   @product-detail

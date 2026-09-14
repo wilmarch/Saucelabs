@@ -19,8 +19,6 @@ public class ProductDetailStepDef extends BaseTest {
     private HomePage homePage;
     private ProductDetailPage productDetailPage;
 
-
-
     @When("User clicks on product title {string}")
     public void userClicksOnProductTitle(String productName) {
         homePage = new HomePage(driver);
