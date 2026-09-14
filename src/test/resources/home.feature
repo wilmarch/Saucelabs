@@ -61,6 +61,18 @@ Feature: Homepage
       | Sauce Labs Bolt T-Shirt |
     Then The shopping cart badge should disappear
 
+  @cart-remove-1-product
+  Scenario: User removes 2
+  products from the cart
+    Given User has already added the following products to the cart
+      | Sauce Labs Backpack     |
+      | Sauce Labs Bike Light   |
+      | Sauce Labs Bolt T-Shirt |
+    When User removes the following products from cart
+      | Sauce Labs Backpack     |
+      | Sauce Labs Bike Light   |
+    Then The shopping cart badge should display "1"
+
   @product-detail
   Scenario Outline: Verify product details match the homepage selection
     When User clicks on product title "<product_name>"

@@ -54,6 +54,12 @@ public class CartPage {
         wait.until(ExpectedConditions.elementToBeClickable(removeBtn)).click();
     }
 
+    public void removeMultipleProductsFromCart(List<String> productNames) {
+        for (String productName : productNames) {
+            clickRemoveByProductName(productName);
+        }
+    }
+
     public boolean isCartEmpty() {
         return driver.findElements(cartItems).isEmpty();
     }

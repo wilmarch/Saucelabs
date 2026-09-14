@@ -17,8 +17,8 @@ import static org.junit.Assert.assertTrue;
 
 public class CartStepDef extends BaseTest {
 
-     HomePage homePage;
-     CartPage cartPage;
+    HomePage homePage;
+    CartPage cartPage;
 
     // Scenario: Verify cart item matches selected product
     @When("User clicks shopping cart icon")
@@ -47,6 +47,12 @@ public class CartStepDef extends BaseTest {
     @When("User removes {string} from cart page")
     public void userRemovesFromCartPage(String productName) {
         cartPage.clickRemoveByProductName(productName);
+    }
+
+    // Scenario: Remove multiple items from cart page
+    @When("User removes the following products from cart page")
+    public void userRemovesTheFollowingProductsFromCartPage(List<String> productList) {
+        cartPage.removeMultipleProductsFromCart(productList);
     }
 
     @Then("The cart should have no items")
