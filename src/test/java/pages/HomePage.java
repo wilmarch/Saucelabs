@@ -24,7 +24,7 @@ public class HomePage {
     By cartBadge = By.cssSelector(".shopping_cart_badge");
     By aboutSidebarLink = By.id("about_sidebar_link");
     By shoppingCartIcon = By.cssSelector("#shopping_cart_container a");
-    By productImages = By.cssSelector(".inventory_item_img img");
+    By productImages = By.cssSelector("img.inventory_item_img");
     By productNames = By.className("inventory_item_name");
 
     public HomePage(WebDriver driver) {
@@ -103,6 +103,12 @@ public class HomePage {
         wait.until(ExpectedConditions.elementToBeClickable(shoppingCartIcon)).click();
     }
 
+    public String getProductImageAltByName(String productName) {
+        String formattedName = productName.toLowerCase().replace(" ", "-");
+        By imageLocator = By.cssSelector("[data-test='inventory-item-" + formattedName + "-img']");
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(imageLocator)).getAttribute("alt");
+    }
+
     public List<String> getAllProductImageSrcs() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(productImages));
         List<WebElement> images = driver.findElements(productImages);
@@ -111,16 +117,6 @@ public class HomePage {
             srcs.add(image.getAttribute("src"));
         }
         return srcs;
-    }
-
-    public List<String> getAllProductImageAlts() {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(productImages));
-        List<WebElement> images = driver.findElements(productImages);
-        List<String> alts = new ArrayList<>();
-        for (WebElement image : images) {
-            alts.add(image.getAttribute("alt"));
-        }
-        return alts;
     }
 
     public List<String> getAllProductNames() {

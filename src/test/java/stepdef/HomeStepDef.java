@@ -114,13 +114,11 @@ public class HomeStepDef extends BaseTest {
     public void eachProductImageShouldMatchItsProductName() {
         homePage = new HomePage(driver);
         List<String> productNames = homePage.getAllProductNames();
-        List<String> imageAlts = homePage.getAllProductImageAlts();
 
-        assertEquals("Jumlah gambar tidak sama dengan jumlah produk", productNames.size(), imageAlts.size());
-
-        for (int i = 0; i < productNames.size(); i++) {
-            assertEquals("Gambar di posisi ke-" + (i + 1) + " tidak sesuai dengan produknya",
-                    productNames.get(i), imageAlts.get(i));
+        for (String productName : productNames) {
+            String actualAlt = homePage.getProductImageAltByName(productName);
+            assertEquals("Gambar untuk produk \"" + productName + "\" tidak sesuai (kemungkinan ketuker)",
+                    productName, actualAlt);
         }
     }
 }

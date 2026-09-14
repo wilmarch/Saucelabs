@@ -15,6 +15,7 @@ public class ProductDetailPage {
 
     private final By productName = By.cssSelector(".inventory_details_name");
     private final By productPrice = By.cssSelector(".inventory_details_price");
+    private final By productImage = By.cssSelector(".inventory_details_img");
     private final By backToProductsBtn = By.id("back-to-products");
     private final By addToCartBtn = By.cssSelector("button[id^='add-to-cart']");
     private final By removeBtn = By.cssSelector("button[id^='remove']");
@@ -30,6 +31,10 @@ public class ProductDetailPage {
 
     public String getProductPrice() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(productPrice)).getText();
+    }
+
+    public String getProductImageAlt() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(productImage)).getAttribute("alt");
     }
 
     public void clickAddToCart() {

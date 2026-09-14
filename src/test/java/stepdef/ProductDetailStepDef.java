@@ -19,6 +19,8 @@ public class ProductDetailStepDef extends BaseTest {
     private HomePage homePage;
     private ProductDetailPage productDetailPage;
 
+
+
     @When("User clicks on product title {string}")
     public void userClicksOnProductTitle(String productName) {
         homePage = new HomePage(driver);
@@ -37,8 +39,9 @@ public class ProductDetailStepDef extends BaseTest {
     public void theProductDetailsShouldDisplayNameAndPrice(String expectedName, String expectedPrice) {
         assertEquals(expectedName, productDetailPage.getProductName());
         assertEquals(expectedPrice, productDetailPage.getProductPrice());
+        assertEquals("Gambar produk tidak sesuai dengan nama produk yang ditampilkan",
+                expectedName, productDetailPage.getProductImageAlt());
     }
-
 
     @Given("User is on product detail page for {string}")
     public void userIsOnProductDetailPageFor(String productName) {
@@ -48,7 +51,6 @@ public class ProductDetailStepDef extends BaseTest {
         wait.until(ExpectedConditions.urlContains("inventory-item.html"));
         productDetailPage = new ProductDetailPage(driver);
     }
-
 
     // Scenario: Add product to cart
     @When("User clicks add to cart button")
