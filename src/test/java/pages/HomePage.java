@@ -21,6 +21,7 @@ public class HomePage {
     By logoutSidebarLink = By.id("logout_sidebar_link");
     By cartBadge = By.cssSelector(".shopping_cart_badge");
     By aboutSidebarLink = By.id("about_sidebar_link");
+    By shoppingCartIcon = By.cssSelector("#shopping_cart_container a");
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -81,5 +82,9 @@ public class HomePage {
     public void clickProductTitleByName(String productName) {
         String xpathExpression = String.format("//div[contains(@class, 'inventory_item_name') and text()='%s']", productName);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression))).click();
+    }
+
+    public void clickShoppingCartIcon() {
+        wait.until(ExpectedConditions.elementToBeClickable(shoppingCartIcon)).click();
     }
 }
