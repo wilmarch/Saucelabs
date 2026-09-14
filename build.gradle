@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.automation'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.seleniumhq.selenium:selenium-java:4.48.0'
+    implementation 'io.cucumber:cucumber-java:7.34.8'
+    testImplementation 'io.cucumber:cucumber-junit:7.34.8'
+    testImplementation 'junit:junit:4.13.2'
+    implementation 'io.github.bonigarcia:webdrivermanager:6.3.4'
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
