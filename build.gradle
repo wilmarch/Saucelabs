@@ -21,4 +21,5 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
+    systemProperty 'cucumber.filter.tags', System.getProperty('cucumber.filter.tags', '')
 }
