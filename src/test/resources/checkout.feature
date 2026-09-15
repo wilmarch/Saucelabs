@@ -8,7 +8,7 @@ Feature: Checkout Flow
     And User has "Sauce Labs Bolt T-Shirt" in the cart
     And User is on checkout information page
 
-  @positive
+  @checkout-success @positive
   Scenario: Complete checkout successfully with valid information
     When User inputs first name "Rusdi", last name "Ngawi", and postal code "12345"
     And User clicks continue button
@@ -48,19 +48,19 @@ Feature: Checkout Flow
     And The order subtotal should equal the sum of item prices
     And The order total should equal subtotal plus tax
 
-  @negative
+  @checkout-empty-firstname @negative
   Scenario: Cannot continue checkout with empty first name
     When User inputs first name "", last name "Ngawi", and postal code "12345"
     And User clicks continue button
     Then User sees checkout error message "Error: First Name is required"
 
-  @negative
+  @checkout-empty-lastname @negative
   Scenario: Cannot continue checkout with empty last name
     When User inputs first name "Rusdi", last name "", and postal code "12345"
     And User clicks continue button
     Then User sees checkout error message "Error: Last Name is required"
 
-  @negative
+  @checkout-empty-postalcode @negative
   Scenario: Cannot continue checkout with empty postal code
     When User inputs first name "Rusdi", last name "Ngawi", and postal code ""
     And User clicks continue button

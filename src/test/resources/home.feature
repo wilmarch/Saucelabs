@@ -27,11 +27,11 @@ Feature: Homepage
     When User clicks burger menu button
     Then The About link should point to "https://saucelabs.com/"
 
-  @image
+  @image-unique-source
   Scenario: Verify each product displays a unique image
     Then Each product image should have a unique source
 
-  @image
+  @image-matches-product-name
   Scenario: Verify each product image matches its own product name
     Then Each product image should match its product name
 
@@ -78,9 +78,8 @@ Feature: Homepage
       | Test.allTheThings() T-Shirt (Red) |
     Then The shopping cart badge should disappear
 
-  @cart-remove-1-product
-  Scenario: User removes 1 products
-  products from the cart
+  @cart-remove-one-of-multiple
+  Scenario: User removes 1 product from the cart
     Given User has already added the following products to the cart
       | Sauce Labs Backpack     |
       | Sauce Labs Bike Light   |
@@ -89,7 +88,7 @@ Feature: Homepage
       | Sauce Labs Backpack     |
     Then The shopping cart badge should display "2"
 
-  @product-detail
+  @home-to-product-detail
   Scenario Outline: Verify product details match the homepage selection
     When User clicks on product title "<product_name>"
     Then User should be redirected to product detail page
