@@ -22,9 +22,21 @@ public class BaseTest {
 
         options.addArguments("--disable-features=PasswordLeakDetection,PasswordManagerOnboarding,PasswordChangeUI");
 
+        boolean isCI = "true".equalsIgnoreCase(System.getenv("CI"));
+        if (isCI) {
+            options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--window-size=1920,1080");
+        }
+
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
+
+        if (!isCI) {
+            driver.manage().window().maximize();
+        }
     }
 
     public static void quitDriver() {
