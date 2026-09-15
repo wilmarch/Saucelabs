@@ -20,7 +20,7 @@
 
 ## 1. Overview
 
-Project ini adalah **automated UI test suite** untuk situs demo e-commerce [SauceDemo](https://www.saucedemo.com/), dibangun pakai **Cucumber (BDD)** + **Selenium WebDriver** dengan bahasa Java. Test ditulis dalam format Gherkin (`.feature`) yang bisa dibaca non-teknis, terhubung ke implementasi Java lewat Step Definitions dan Page Object Model.
+Project ini adalah **automated UI test suite** untuk situs demo e-commerce [SauceDemo](https://www.saucedemo.com/), dibangun pakai **Cucumber (BDD)** + **Selenium WebDriver** dengan bahasa Java. Test ditulis dalam format Gherkin (`.feature`) yang bisa dibaca non teknis, terhubung ke implementasi Java lewat Step Definitions dan Page Object Model.
 
 **Total skenario saat ini: 5 feature file, 33 scenario (43 test case kalau Scenario Outline dihitung per baris Examples).**
 
@@ -131,18 +131,18 @@ SauceDemo nyediain beberapa akun demo dengan behavior beda-beda. Yang **udah dip
 ## 6. Ringkasan Coverage
 
 Area yang **sudah** dites end-to-end:
-- ✅ Login (positive, invalid credentials, locked-out, empty field)
-- ✅ Sorting produk (4 opsi filter)
-- ✅ Logout & link About
-- ✅ Integritas gambar produk (unik antar produk & sesuai nama produknya)
-- ✅ Add/remove produk ke cart — single & multiple, dari homepage maupun dari cart page
-- ✅ Navigasi antar halaman (home ↔ cart ↔ product detail ↔ checkout)
-- ✅ Checkout multi-item lengkap (info → overview → complete)
-- ✅ Validasi form checkout (first name, last name, postal code kosong)
-- ✅ Cancel checkout (dari info page maupun overview page)
-- ✅ Kalkulasi harga di order summary (subtotal, tax, total — cross-check matematis)
-- ✅ Fitur generate PDF (smoke test) & navigasi post-checkout
-- ✅ 1 known-bug SauceDemo didokumentasikan (`@bug @expected-fail`)
+-  Login (positive, invalid credentials, locked-out, empty field)
+-  Sorting produk (4 opsi filter)
+- Logout & link About
+- Integritas gambar produk (unik antar produk & sesuai nama produknya)
+- Add/remove produk ke cart — single & multiple, dari homepage maupun dari cart page
+- Navigasi antar halaman (home ↔ cart ↔ product detail ↔ checkout)
+- Checkout multi-item lengkap (info → overview → complete)
+- Validasi form checkout (first name, last name, postal code kosong)
+- Cancel checkout (dari info page maupun overview page)
+- Kalkulasi harga di order summary (subtotal, tax, total — cross-check matematis)
+- Fitur generate PDF (smoke test) & navigasi post-checkout
+- 1 known bug SauceDemo didokumentasikan (`@bug @expected-fail`)
 
 ---
 
@@ -247,21 +247,12 @@ Background: `Given User is logged in as "standard_user"` + add 3 produk (Backpac
 ### 9.1 Bug SauceDemo: Checkout dengan cart kosong (`@bug @expected-fail`)
 SauceDemo **tidak memvalidasi** cart kosong saat checkout — tombol "Checkout" tetap bisa diklik dan meng-redirect ke `checkout-step-one.html` meskipun cart kosong. Scenario `Checkout seharusnya tidak bisa lanjut jika cart kosong` sengaja ditulis dengan ekspektasi "seharusnya" (bahwa user tetap di cart page), sehingga scenario ini **akan selalu FAILED** sampai bug-nya diperbaiki oleh SauceDemo.
 
-> ⚠️ **Dampak ke CI/build**: Tag `@expected-fail` di sini **murni dokumentasi** — Cucumber/JUnit tidak otomatis menganggapnya "boleh gagal". Build tetap **FAILED** walau kegagalan ini memang yang diharapkan. Kalau mau build tetap hijau tanpa kehilangan dokumentasi bug ini, ada 2 opsi:
-> 1. Exclude tag `@bug` dari run utama CI (`-Dcucumber.filter.tags="not @bug"`), jalankan terpisah untuk dokumentasi manual.
-> 2. Balik assertion di step def khusus scenario ini — assert bahwa checkout **berhasil lanjut** (PASS = bug masih ada; kalau tiba-tiba FAIL berarti bug sudah diperbaiki SauceDemo, dan step def perlu di-update).
+> **Dampak ke CI/build**: Tag `@expected-fail` di sini **murni dokumentasi** — Cucumber/JUnit tidak otomatis menganggapnya "boleh gagal". Build tetap **FAILED** walau kegagalan ini memang yang diharapkan.
 
 ### 9.2 Generate PDF — smoke test, bukan verifikasi isi
-`generate-pdf-order` men-trigger **download file**, bukan render elemen di halaman. Verifikasi isi PDF (apakah datanya benar) di luar scope Selenium standar tanpa setup tambahan (baca folder downloads, konfigurasi Chrome prefs). Scenario `@generate-pdf` saat ini cuma **smoke test**: klik tombol → pastikan halaman tidak error/berpindah. Kalau butuh verifikasi isi PDF lebih dalam, perlu tambahan library pembaca PDF + konfigurasi download directory di `BaseTest`.
+`generate-pdf-order` men-trigger **download file**, bukan render elemen di halaman. Verifikasi isi PDF (apakah datanya benar) di luar scope Selenium standar tanpa setup tambahan (baca folder downloads, konfigurasi Chrome prefs). Scenario `@generate-pdf` saat ini cuma **smoke test**: klik tombol → pastikan halaman tidak error/berpindah.
 
-### 9.3 Deskripsi produk (`inventory_item_desc`) sengaja tidak divalidasi
-Sempat dibahas untuk menambah verifikasi teks deskripsi produk, tapi diputuskan **tidak diimplementasi** karena:
-- Teks deskripsi panjang → rawan typo kalau di-hardcode di feature file
+### 9.3 Deskripsi produk (`inventory_item_desc`) sengaja tidak divalidasi karena:
+- Teks deskripsi panjang → rawan typo kalau di hardcode di feature file
 - Kalau SauceDemo mengubah kalimat deskripsi, test akan false-fail meski bukan bug
-
-### 9.4 Cart page — belum dikonfirmasi menampilkan gambar produk
-Belum ada scenario image-check untuk cart page (beda dengan homepage & detail page yang sudah dites), karena belum ada konfirmasi markup HTML apakah cart page menampilkan `<img>` produk atau cuma teks. Perlu dicek manual sebelum implementasi.
-
----
-
 
