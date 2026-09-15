@@ -16,10 +16,8 @@ import static org.junit.Assert.assertTrue;
 
 public class ProductDetailStepDef extends BaseTest {
 
-    private HomePage homePage;
-    private ProductDetailPage productDetailPage;
-
-
+     HomePage homePage;
+     ProductDetailPage productDetailPage;
 
     @When("User clicks on product title {string}")
     public void userClicksOnProductTitle(String productName) {
@@ -52,14 +50,12 @@ public class ProductDetailStepDef extends BaseTest {
         productDetailPage = new ProductDetailPage(driver);
     }
 
-    // Scenario: Add product to cart
     @When("User clicks add to cart button")
     public void userClicksAddToCartButton() {
         productDetailPage = new ProductDetailPage(driver);
         productDetailPage.clickAddToCart();
     }
 
-    // Scenario: Remove product from cart
     @Given("User has already added the product to cart from detail page")
     public void userHasAlreadyAddedTheProductToCartFromDetailPage() {
         productDetailPage = new ProductDetailPage(driver);
@@ -77,7 +73,6 @@ public class ProductDetailStepDef extends BaseTest {
         assertEquals(expectedButtonText, productDetailPage.getActionButtonText());
     }
 
-    // Scenario: Navigate back to inventory page
     @When("User clicks back to products button")
     public void userClicksBackToProductsButton() {
         productDetailPage = new ProductDetailPage(driver);

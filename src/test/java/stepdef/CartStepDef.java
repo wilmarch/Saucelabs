@@ -12,7 +12,6 @@ import pages.HomePage;
 import java.time.Duration;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CartStepDef extends BaseTest {
@@ -20,7 +19,6 @@ public class CartStepDef extends BaseTest {
     HomePage homePage;
     CartPage cartPage;
 
-    // Scenario: Verify cart item matches selected product
     @When("User clicks shopping cart icon")
     public void userClicksShoppingCartIcon() {
         homePage = new HomePage(driver);
@@ -43,13 +41,11 @@ public class CartStepDef extends BaseTest {
         assertTrue("Item dengan nama '" + expectedName + "' dan harga '" + expectedPrice + "' tidak ditemukan di cart", found);
     }
 
-    // Scenario: Remove item from cart page
     @When("User removes {string} from cart page")
     public void userRemovesFromCartPage(String productName) {
         cartPage.clickRemoveByProductName(productName);
     }
 
-    // Scenario: Remove multiple items from cart page
     @When("User removes the following products from cart page")
     public void userRemovesTheFollowingProductsFromCartPage(List<String> productList) {
         cartPage.removeMultipleProductsFromCart(productList);
@@ -60,13 +56,11 @@ public class CartStepDef extends BaseTest {
         assertTrue(cartPage.isCartEmpty());
     }
 
-    // Scenario: Navigate back to homepage via continue shopping
     @When("User clicks continue shopping button")
     public void userClicksContinueShoppingButton() {
         cartPage.clickContinueShopping();
     }
 
-    // Scenario: @bug @expected-fail - checkout dengan cart kosong
     @When("User clicks checkout button")
     public void userClicksCheckoutButton() {
         cartPage.clickCheckout();

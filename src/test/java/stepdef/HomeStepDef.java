@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 
 public class HomeStepDef extends BaseTest {
 
-    private HomePage homePage;
+    HomePage homePage;
 
     // @sorting
     @When("User selects filter option {string}")
@@ -34,7 +34,6 @@ public class HomeStepDef extends BaseTest {
         assertEquals(expectedName, actualName);
     }
 
-    // @logout & @about (keduanya pakai burger menu)
     @When("User clicks burger menu button")
     public void userClicksBurgerMenuButton() {
         homePage = new HomePage(driver);
@@ -60,7 +59,6 @@ public class HomeStepDef extends BaseTest {
         assertEquals(expectedUrl, homePage.getAboutLinkHref());
     }
 
-    // @cart-add
     @When("User adds the following products to cart")
     public void userAddsTheFollowingProductsToCart(List<String> productList) {
         homePage = new HomePage(driver);
@@ -93,15 +91,12 @@ public class HomeStepDef extends BaseTest {
         assertTrue(homePage.isCartBadgeInvisible());
     }
 
-    // ===== Step composite, dipakai di Background checkout.feature =====
-
     @Given("User has {string} in the cart")
     public void userHasInTheCart(String productName) {
         homePage = new HomePage(driver);
         homePage.clickAddToCartByProductName(productName);
     }
 
-    // @image
     @Then("Each product image should have a unique source")
     public void eachProductImageShouldHaveAUniqueSource() {
         homePage = new HomePage(driver);
